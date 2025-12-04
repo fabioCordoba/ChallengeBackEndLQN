@@ -18,8 +18,35 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from graphene_django.views import GraphQLView
+from drf_yasg.views import get_schema_view
+from django.conf.urls.static import static
+from drf_yasg import openapi
+
+from ChallengeBackEndLQN import settings
+
+schema_view = get_schema_view(
+    openapi.Info(
+        title="Challenge Back-End - LQN",
+        default_version="v1",
+        description="API GraphQL en Django para fanáticos de Star Wars",
+        terms_of_service="",
+        contact=openapi.Contact(email="contact@snippets.local"),
+        license=openapi.License(name="BSD License"),
+    ),
+    public=True,
+    #    permission_classes=(permissions.AllowAny,),
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("graphql", GraphQLView.as_view(graphiql=True)),
+    path(
+        "docs/",
+        schema_view.with_ui("swagger", cache_timeout=0),
+        name="schema-swagger-ui",
+    ),
+    path("redocs/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

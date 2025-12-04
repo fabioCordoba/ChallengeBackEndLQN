@@ -11,5 +11,8 @@ class Film(BaseModel):
     release_date = models.DateField(null=True, blank=True)
     planets = models.ManyToManyField(Planet, related_name='films', blank=True)
 
+    class Meta:
+        ordering = ("title",)
+
     def __str__(self):
         return f"Film: {self.title} (Episode {self.episode_id})"

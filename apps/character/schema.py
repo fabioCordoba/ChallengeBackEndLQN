@@ -25,7 +25,6 @@ class CharacterNode(DjangoObjectType):
 class CharacterQuery(graphene.ObjectType):
     all_characters = graphene.List(CharacterNode)
     character_by_id = graphene.Field(CharacterNode, id=graphene.UUID(required=True))
-    # character = relay.Node.Field(CharacterNode)
     characters = DjangoFilterConnectionField(CharacterNode)
 
     def resolve_all_characters(root, info):

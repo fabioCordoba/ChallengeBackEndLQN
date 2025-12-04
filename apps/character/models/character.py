@@ -12,6 +12,9 @@ class Character(BaseModel):
     films = models.ManyToManyField(Film, related_name='characters', blank=True)
     homeworld = models.ForeignKey(Planet, null=True, blank=True, on_delete=models.SET_NULL, related_name='residents')
 
+    class Meta:
+        ordering = ['name']
+    
     def __str__(self):
         return f"Character: {self.name}"
 
