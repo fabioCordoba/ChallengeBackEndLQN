@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  backend-django-LQN:
+    image: fabiocordobadev/personal:ChallengeBackEndLQN
+    container_name: backend-django-LQN
+    restart: always
+    ports:
+      - 8091:8000
+    networks:
+      - LQN-network
+    
+networks:
+  LQN-network:

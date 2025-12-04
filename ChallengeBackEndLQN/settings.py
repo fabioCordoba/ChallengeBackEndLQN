@@ -32,16 +32,16 @@ ALLOWED_HOSTS = [
     "localhost",
     "fabiocordoba.me",
     "www.fabiocordoba.me",
-    "starwars.fabiocordoba.me",
+    "lqn.fabiocordoba.me",
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    "https://starwars.fabiocordoba.me",
+    "https://lqn.fabiocordoba.me",
     "https://fabiocordoba.me",
 ]
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://starwars.fabiocordoba.me",
+    "https://lqn.fabiocordoba.me",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
