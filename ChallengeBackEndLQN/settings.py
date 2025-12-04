@@ -71,6 +71,7 @@ THIRD_APPS = [
     "rest_framework",
     "rest_framework_simplejwt",
     "graphene_django",
+    "django_filters",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS

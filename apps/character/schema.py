@@ -4,16 +4,29 @@ from apps.planet.models.planet import Planet
 import graphene
 from graphene_django.types import DjangoObjectType
 from graphene import relay
+from django_filters import FilterSet, CharFilter
+from graphene_django.filter import DjangoFilterConnectionField
+
+class CharacterFilter(FilterSet):
+    name = CharFilter(field_name="name", lookup_expr="icontains")
+
+    class Meta:
+        model = Character
+        fields = ["name"]
 
 class CharacterNode(DjangoObjectType):
     class Meta:
         model = Character
         interfaces = (relay.Node,)
-        fields = "__all__"
+        # fields = "__all__"
+        filterset_class = CharacterFilter
+
 
 class CharacterQuery(graphene.ObjectType):
     all_characters = graphene.List(CharacterNode)
     character_by_id = graphene.Field(CharacterNode, id=graphene.UUID(required=True))
+    # character = relay.Node.Field(CharacterNode)
+    characters = DjangoFilterConnectionField(CharacterNode)
 
     def resolve_all_characters(root, info):
         return Character.objects.all()
