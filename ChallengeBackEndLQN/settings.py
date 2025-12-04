@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,14 +25,32 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-&@l4%)65$+&@xnco))2oxs8qn68ipb+mmz)af0s*xdu$k&_fwc"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "fabiocordoba.me",
+    "www.fabiocordoba.me",
+    "starwars.fabiocordoba.me",
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "https://starwars.fabiocordoba.me",
+    "https://fabiocordoba.me",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://starwars.fabiocordoba.me",
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
+    "corsheaders",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -39,7 +59,21 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 
+PROJECT_APPS = [
+    "apps.core",
+]
+
+THIRD_APPS = [
+    "drf_yasg",
+    "rest_framework",
+    "rest_framework_simplejwt",
+]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
+
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -74,8 +108,12 @@ WSGI_APPLICATION = "ChallengeBackEndLQN.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": config("DATABASE_NAME", default=""),
+        "USER": config("DATABASE_USER", default=""),
+        "PASSWORD": config("DATABASE_PASSWD", default=""),
+        "HOST": config("DATABASE_HOST", default=""),
+        "PORT": config("DATABASE_PORT", default=""),
     }
 }
 
@@ -115,6 +153,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = "static/"
+# STATIC_ROOT = "./static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # para producción
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
