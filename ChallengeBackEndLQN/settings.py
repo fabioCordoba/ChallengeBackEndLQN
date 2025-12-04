@@ -61,6 +61,9 @@ DJANGO_APPS = [
 
 PROJECT_APPS = [
     "apps.core",
+    "apps.planet",
+    "apps.film",
+    "apps.character",
 ]
 
 THIRD_APPS = [
