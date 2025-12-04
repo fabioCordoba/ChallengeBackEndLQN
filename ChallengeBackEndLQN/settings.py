@@ -70,6 +70,7 @@ THIRD_APPS = [
     "drf_yasg",
     "rest_framework",
     "rest_framework_simplejwt",
+    "graphene_django",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_APPS + PROJECT_APPS
@@ -164,3 +165,7 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+GRAPHENE = {
+    "SCHEMA": "apps.core.schema.schema",
+}
