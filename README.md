@@ -328,6 +328,10 @@ Password: admin
 
 ---
 
+## [Ir a la galeria de fotos](gallery.md)
+
+---
+
 ## ©️ **Autor**
 
 **Fabio Córdoba**
