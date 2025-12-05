@@ -1,7 +1,7 @@
 ---
 
-![Test ](staticfiles\img\pytest.png)
+![Test ](staticfiles/img/pytest.png)
 
 ---
 
-![allCharacters ](staticfiles\img\allCharacters.png)
+## ![allCharacters ](staticfiles/img/allCharacters.png)
