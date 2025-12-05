@@ -239,7 +239,7 @@ El proyecto incluye **tests para modelos y GraphQL**. Para correrlos dentro del 
 docker-compose exec web python manage.py test
 ```
 
-Si quieres ejecutar todo los test, in usar docker
+Si quieres ejecutar todos los test, sin usar docker
 
 ```bash
 pytest --ds=ChallengeBackEndLQN.settings_test
@@ -305,9 +305,18 @@ https://lqn.fabiocordoba.me/admin/
 
 ```
 
+Credenciales admin Produccion
+
+```bash
+Username: fabiocordoba
+Password: admin
+```
+
 ---
 
 ## ⭐ **Ejemplos de consultas**
+
+[Ir a la documentación de Api](docs.md)
 
 ### Obtener lista de personajes:
 
