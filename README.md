@@ -225,11 +225,55 @@ docker-compose restart
 - Asegúrate de que los puertos `8000` (Django) y `5432` (PostgreSQL) estén libres en tu máquina.
 - Para desarrollo, `DEBUG=True` está habilitado. Para producción, configurar variables de entorno adecuadas.
 
----
-
 Con esto, el proyecto debería estar listo para correr localmente usando Docker.
 
 ---
+
+## 8. Ejecutar tests
+
+El proyecto incluye **tests para modelos y GraphQL**. Para correrlos dentro del contenedor Docker:
+
+### 8.1 Ejecutar todos los tests
+
+```bash
+docker-compose exec web python manage.py test
+```
+
+Si quieres ejecutar todo los test, in usar docker
+
+```bash
+pytest --ds=ChallengeBackEndLQN.settings_test
+```
+
+Esto ejecutará todos los tests de las apps (`character`, `planet`, `film`) incluyendo:
+
+- Tests de modelos (`tests/test_<modelo>_model.py`)
+- Tests de GraphQL (`tests/test_<modelo>_graphql.py`)
+
+---
+
+### 8.2 Ejecutar tests específicos de una app
+
+Por ejemplo, solo los tests de `character`:
+
+```bash
+docker-compose exec web python manage.py test apps.character
+```
+
+---
+
+### 8.3 Ejecutar un test específico
+
+```bash
+docker-compose exec web python manage.py test apps.character.tests.test_character_graphql.TestCharacterQueries
+```
+
+---
+
+### Notas
+
+- Los tests se ejecutan en el entorno del contenedor, por lo que no necesitas instalar dependencias localmente.
+- Se recomienda ejecutar los tests después de hacer migraciones o agregar nuevas funcionalidades para asegurar que todo funciona correctamente.
 
 ## 🛰️ **Endpoint Admin**
 
@@ -269,10 +313,23 @@ https://lqn.fabiocordoba.me/admin/
 
 ```graphql
 query {
-  characters {
+  allCharacters {
+    id
     name
-    species
-    planet
+    birthYear
+    gender
+    height
+    mass
+    homeworld {
+      name
+    }
+    films {
+      edges {
+        node {
+          title
+        }
+      }
+    }
   }
 }
 ```
@@ -281,9 +338,19 @@ query {
 
 ```graphql
 query {
-  character(id: 1) {
+  characterById(id: "cb4b6ce0-01f8-4650-af6f-bc31bbe62386") {
+    id
     name
-    homeworld
+    homeworld {
+      name
+    }
+    films {
+      edges {
+        node {
+          title
+        }
+      }
+    }
   }
 }
 ```
